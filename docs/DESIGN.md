@@ -119,6 +119,12 @@ lid, so the usable capacity is less than the nominal 40 L. The analyzer reports
 5. Take the largest contour. Reject it if area < min, if circularity
    `4πA/P²` < 0.75, or if it touches the image border.
 6. Diameter = `2·sqrt(hull_area/π)` from the **convex hull** (sub-pixel). The printed logo on the ball breaks the mask; the hull bridges it.
+   Cross-check: a **RANSAC circle fit** on the contour points. It uses only the visible arc, so it is immune
+   to partial covering and to mask spill onto the background. Bench: area method ±0.6 px, circle fit ±4 px.
+   If the two disagree by > 3 %, or < 50 % of the outline lies on the fitted circle, the frame is
+   rejected as *occluded / bad mask* instead of reporting a wrong level.
+   A faint, blurry orange "ghost" of the ball (lens reflection) appears next to it on the bench. It is
+   rejected by low saturation and by picking the largest round blob.
 7. Push to a rolling window (default 5), take the median, and convert with the
    calibration to litres, cm and %.
 8. Publish. Every N minutes (and on failure), save the raw and annotated JPEGs to

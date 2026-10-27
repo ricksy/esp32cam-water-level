@@ -1,0 +1,22 @@
+{
+  "_comment": "EXAMPLE ONLY - generated from the bench focal length; replace with measured points (Phase 5)",
+  "full_litres": 30,
+  "points": [
+    {
+      "litres": 0,
+      "diameter_px": 143.9
+    },
+    {
+      "litres": 10,
+      "diameter_px": 176.7
+    },
+    {
+      "litres": 20,
+      "diameter_px": 228.9
+    },
+    {
+      "litres": 30,
+      "diameter_px": 325.0
+    }
+  ]
+}

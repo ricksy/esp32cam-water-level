@@ -7,7 +7,7 @@ The camera sits in the lid and looks down at the ball. The closer the water
 gets to the top, the bigger the ball looks. A Home Assistant add-on turns the
 ball's apparent size into litres and publishes it over MQTT.
 
-> **Status:** design phase. See [docs/PLAN.md](docs/PLAN.md).
+> **Status:** camera firmware and ball detection work on the bench; tank install and the Home Assistant add-on are next. See [docs/PLAN.md](docs/PLAN.md).
 
 ## How it works
 
@@ -31,13 +31,14 @@ A perforated guide tube keeps the ball centred under the lens. Details are in
 
 See [docs/HARDWARE.md](docs/HARDWARE.md).
 
-## Repository layout (planned)
+## Repository layout
 
 ```
 firmware/               PlatformIO / Arduino firmware for the ESP32-CAM
 analyzer/               Python detection + calibration library and CLI
-water_level_analyzer/   Home Assistant add-on (Dockerfile, config.yaml)
+water_level_analyzer/   Home Assistant add-on (planned, Phase 6)
 samples/                Reference images used by the tests
+tools/                  Bench capture helper
 docs/                   Design, hardware and plan
 ```
 

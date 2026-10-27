@@ -30,11 +30,13 @@ starts.
 - [ ] 24 h soak test: 1 capture/min with no hang or brownout
 - [ ] Wi-Fi is marginal on the desk (RSSI −67…−72, ~5 s per 100 KB UXGA, software resets after Wi-Fi loss): check RSSI at the tank, consider a crop window (only the tube matters) or lower resolution / JPEG quality
 
-## Phase 3: Analyzer core (offline)
-- [ ] `analyzer/` Python package: `detect.py` (HSV → mask → contour → diameter), `calibrate.py` (fit `V = b − a/d` and piecewise fallback)
-- [ ] CLI: `python -m water_level analyze image.jpg` → diameter + annotated image
-- [ ] Sample images from Phase 1 committed under `samples/`, with pytest tests on them
-- [ ] Rolling median, rejection rules (area, circularity, border touch)
+## Phase 3: Analyzer core (offline) ✅
+- [x] `analyzer/` Python package: `detect.py` (HSV → mask → convex hull diameter + RANSAC circle cross-check), `calibrate.py` (fit `V = b − a/d`, auto piecewise fallback)
+- [x] CLI: `python -m water_level analyze IMAGE|URL [--calibration] [--annotate DIR]`, `fit cal.json`
+- [x] 9 sample images from Phase 1 in `samples/`, 36 pytest tests (real + synthetic images)
+- [x] Rolling median with spread, rejection rules (`no_ball`, `too_small`, `touches_border`, `not_round`, `occluded`)
+- [ ] Known limit: a dim ball (LED < 60 % at far range) is accepted but measured too small; relies on LED 100 %
+- [ ] Possibly add `too_dark` / room-light detection (background brightness) once tank images exist
 
 ## Phase 4: Mechanical install
 - [ ] Lid layout: guide tube/camera opposite the dryer inlet, grommet for drip tubes + pump cable

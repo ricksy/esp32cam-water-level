@@ -13,6 +13,23 @@
 | Small clear acrylic window (~40 × 40 mm) | Seals the camera away from humidity |
 | Enclosure / 3D-printed mount for the lid | Holds the board with the lens centred over the tube |
 
+## Board
+
+AI-Thinker ESP32-CAM (ESP32-D0WD-V3, 4 MB flash) with an OV2640 sensor
+(`TY-OV2640-V2.0` flex, stock lens) on an ESP32-CAM-MB programmer (CH340,
+micro-USB, IO0 + RST buttons).
+
+![ESP32-CAM on ESP32-CAM-MB](images/esp32-cam-board.jpg)
+
+* The **white flash LED** (bottom right in the photo, GPIO4) is ~2.5 cm away from
+  the lens. Under a shared window, the flash reflects off the acrylic straight
+  into the lens. To avoid that, put a **foam/rubber divider** between LED and
+  lens, pressed against the window, or give each its own hole/window.
+* Peel off the red protective tab on the lens.
+* The lens is the standard ~66° (diagonal) type. Its focus can be adjusted by
+  turning it (break the glue dot carefully).
+* The MB board's micro-USB doubles as the 5 V power input in the final install.
+
 ## Tank
 
 plasteo 40 L wide-neck drum (Weithalsfass), blue, opaque, with a screw lid.

@@ -27,7 +27,7 @@ A perforated guide tube keeps the ball centred under the lens. Details are in
 * AI-Thinker ESP32-CAM (OV2640) with ESP32-CAM-MB programmer, 5 V USB power
 * 40 mm orange ping-pong ball
 * ~50 mm perforated PVC tube
-* 40 L opaque plastic drum
+* 40 L opaque plastic drum (plasteo, 35 × 35 × 45 cm, Ø 22 cm neck)
 
 See [docs/HARDWARE.md](docs/HARDWARE.md).
 

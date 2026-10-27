@@ -15,12 +15,23 @@
 
 ## Tank
 
-plasteo 40 L wide-neck drum (Weithalsfass), square, blue, opaque, with lid.
-Listed outer size is 45 × 35 × 45 cm. That would be ~71 L, so the dimensions
-include the lid, handles and wall thickness, and the body is probably slightly
-tapered. **Volume is therefore set by calibration, not by the dimensions.**
-Opaque blue walls: the inside is dark, so every photo uses the flash. The blue
-background also helps the orange segmentation.
+plasteo 40 L wide-neck drum (Weithalsfass), blue, opaque, with a screw lid.
+
+![plasteo 40 L drum](images/plasteo-40l-drum.jpg)
+
+* Footprint **35 × 35 cm** with chamfered corners; total height **45 cm**
+  *including* the neck and lid. (The "45 × 35 × 45" in the listing is wrong;
+  the drum is 35 × 35.)
+* Square body ≈ 33 cm tall (35 × 35 × 33 ≈ 40 L), then a shoulder, then a
+  round **neck, opening Ø 22 cm**, about 10 cm tall.
+* The camera sits in the screw lid, so the lens is ~10 cm above the top of the
+  body. Water in the shoulder/neck has a much smaller area per cm. That's the
+  reason calibration falls back to a piecewise table near the top.
+* A free-floating ball could hide under the shoulder, out of the camera's
+  view. One more reason for the guide tube.
+* **Volume is set by calibration, not by the dimensions.**
+* Opaque blue walls: the inside is dark, so every photo uses the flash. The blue
+  background also helps the orange segmentation.
 
 ## Mounting
 

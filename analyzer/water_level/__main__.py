@@ -2,11 +2,14 @@
 
     python -m water_level analyze IMAGE_OR_URL... [--calibration cal.json] [--annotate DIR]
     python -m water_level fit cal.json
+    python -m water_level serve --options /data/options.json
 """
 
 from __future__ import annotations
 
 import argparse
+import json
+import logging
 import sys
 import urllib.request
 from pathlib import Path
@@ -62,6 +65,15 @@ def cmd_fit(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_serve(args: argparse.Namespace) -> int:
+    from .service import ServiceConfig, serve
+
+    logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO,
+                        format="%(asctime)s %(levelname)s %(message)s")
+    serve(ServiceConfig.from_options(json.loads(Path(args.options).read_text())))
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="water_level")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -75,6 +87,12 @@ def main(argv: list[str] | None = None) -> int:
     p = sub.add_parser("fit", help="show the fit and residuals of a calibration")
     p.add_argument("calibration")
     p.set_defaults(func=cmd_fit)
+
+    p = sub.add_parser("serve", help="poll the camera and publish to MQTT")
+    p.add_argument("--options", default="/data/options.json",
+                   help="add-on options JSON (same keys work standalone)")
+    p.add_argument("-v", "--verbose", action="store_true")
+    p.set_defaults(func=cmd_serve)
 
     args = parser.parse_args(argv)
     return args.func(args)

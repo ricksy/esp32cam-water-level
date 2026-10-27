@@ -132,17 +132,23 @@ lid, so the usable capacity is less than the nominal 40 L. The analyzer reports
 
 ## Home Assistant entities (MQTT discovery)
 
+All on one device, **Water Tank**, state JSON on `water_tank/state` (retained).
+
 | Entity | Unit | Notes |
 |---|---|---|
 | `sensor.water_tank_volume` | L | `device_class: volume_storage`, `state_class: measurement` |
-| `sensor.water_tank_level` | % | of calibrated full |
-| `sensor.water_tank_height` | cm | water height above floor |
-| `sensor.water_tank_ball_diameter` | px | diagnostic; used for calibration |
-| `binary_sensor.water_tank_detection_ok` | – | `problem` class, on when detection fails |
-| `camera.water_tank_snapshot` | – | MQTT camera with the annotated last image |
+| `sensor.water_tank_level` | % | of `full_litres` (default: highest calibration point) |
+| `sensor.water_tank_ball_diameter` | px | diagnostic; median-filtered, used for calibration |
+| `sensor.water_tank_surface_spread` | px | diagnostic; max − min of the median window, large while water moves |
+| `binary_sensor.water_tank_detection_problem` | – | `problem` class; attributes include `reason`, `raw_diameter_px` |
+| `camera.water_tank_snapshot` | – | MQTT camera, annotated frame scaled to 800 px (`water_tank/image`) |
 
-Availability topic: the add-on sets an LWT, and the analyzer also marks entities
-unavailable if the ESP32 is unreachable for > 5 min.
+Water *height* in cm is not published: it needs the true footprint, and litres
+are what matter. During a problem, the last good level is kept.
+
+Availability: `water_tank/availability` with an MQTT last will, plus an explicit
+`offline` on SIGTERM. A camera that can't be reached is reported as the
+problem reason `camera_unreachable`.
 
 ## Firmware (ESP32-CAM)
 

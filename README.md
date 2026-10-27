@@ -36,16 +36,25 @@ See [docs/HARDWARE.md](docs/HARDWARE.md).
 ```
 firmware/               PlatformIO / Arduino firmware for the ESP32-CAM
 analyzer/               Python detection + calibration library and CLI
-water_level_analyzer/   Home Assistant add-on (planned, Phase 6)
+water_level_analyzer/   Home Assistant add-on (repository.yaml at the root)
 samples/                Reference images used by the tests
 tools/                  Bench capture helper
 docs/                   Design, hardware and plan
 ```
 
+## Install the Home Assistant add-on
+
+1. **Settings → Add-ons → Add-on store → ⋮ → Repositories**, add
+   `https://github.com/ricksy/esp32cam-water-level`.
+2. Install **Water Level Analyzer**, set the camera URL, start it.
+3. Calibrate. See [water_level_analyzer/DOCS.md](water_level_analyzer/DOCS.md).
+
+Requires the Mosquitto broker add-on.
+
 ## Home Assistant entities
 
-`sensor.water_tank_volume`, `sensor.water_tank_level`, `sensor.water_tank_height`,
-`sensor.water_tank_ball_diameter` (diagnostic), `binary_sensor.water_tank_detection_ok`,
+`sensor.water_tank_volume`, `sensor.water_tank_level`, `sensor.water_tank_ball_diameter`,
+`sensor.water_tank_surface_spread`, `binary_sensor.water_tank_detection_problem`,
 `camera.water_tank_snapshot`.
 
 ## License

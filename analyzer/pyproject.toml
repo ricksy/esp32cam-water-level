@@ -9,6 +9,9 @@ dependencies = [
     "opencv-python-headless>=4.9",
 ]
 
+[project.optional-dependencies]
+service = ["paho-mqtt>=2.1"]
+
 [dependency-groups]
 dev = [
     "pytest>=8",

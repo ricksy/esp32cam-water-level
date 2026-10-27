@@ -52,12 +52,17 @@ starts.
 - [ ] Verify with 3 independent random fills: target error ≤ ±0.5 L
 - [ ] Determine the real usable max (headroom limit)
 
-## Phase 6: Home Assistant add-on
-- [ ] `repository.yaml` at repo root, add-on in `water_level_analyzer/` (`config.yaml`, `Dockerfile`, `run.sh`)
-- [ ] Options: ESP32 URL, interval, ROI, HSV thresholds, calibration points, MQTT (auto from Mosquitto service)
-- [ ] MQTT discovery for the entities listed in DESIGN.md, plus availability
-- [ ] Debug images to `/share/water_level/`
-- [ ] Install via "Add-on store → Repositories → this GitHub URL"
+## Phase 6: Home Assistant add-on (code done, install pending)
+- [x] `repository.yaml` at repo root, add-on in `water_level_analyzer/` (`config.yaml`, `build.yaml`, `Dockerfile`, `DOCS.md`, translations)
+- [x] Service `python -m water_level serve`: poll, detect, median, calibrate, publish; keeps last good level on rejected frames
+- [x] Options: camera URL, interval, median window, ROI, HSV thresholds, calibration points, MQTT (auto from Mosquitto service)
+- [x] MQTT discovery (6 entities, one device), availability + LWT + offline on SIGTERM
+- [x] Debug images to `/share/water_level/` (latest, annotated, last 50 failed)
+- [x] 10 service tests; end-to-end run against a local broker and the live camera
+- [x] Dockerfile installs the package from the `v<version>` release tarball (tested locally with `#subdirectory=analyzer`)
+- [ ] Push + tag `v0.1.0`, then install via "Add-on store → ⋮ → Repositories → https://github.com/ricksy/esp32cam-water-level"
+- [ ] First Docker build on the HA machine (couldn't build locally, no Docker here)
+- [ ] Give the camera a fixed DHCP lease, set `camera_url` to its IP
 
 ## Phase 7: Hardening and automations
 - [ ] Alert automations: overflow (≥ 90 % / ≥ 97 %), low water (< 20 %), detection failing > 10 min, device offline

@@ -1,0 +1,56 @@
+configuration:
+  camera_url:
+    name: Camera URL
+    description: >-
+      Snapshot URL of the ESP32-CAM. Add-ons often can't resolve .local names;
+      use the camera's IP address (give it a fixed DHCP lease).
+  interval_seconds:
+    name: Interval
+    description: Seconds between snapshots.
+  median_window:
+    name: Median window
+    description: Number of recent readings to take the median over.
+  full_litres:
+    name: Full volume (L)
+    description: Litres shown as 100 %. 0 uses the highest calibration point.
+  calibration:
+    name: Calibration points
+    description: >-
+      Pairs of known litres and the "Ball diameter" diagnostic sensor value.
+      At least 2, e.g. empty and full; more points detect the drum's shoulder.
+  image_dir:
+    name: Image folder
+    description: Latest and failed snapshots are saved here for debugging.
+  save_failed_images:
+    name: Keep failed snapshots
+    description: Keep the last 50 rejected frames in <image folder>/failed.
+  roi:
+    name: Region of interest
+    description: Optional "x,y,w,h" crop around the guide tube, in full-image pixels.
+  hue_min:
+    name: Hue min
+    description: Orange mask, OpenCV hue 0..179 (default 3).
+  hue_max:
+    name: Hue max
+    description: Default 28.
+  sat_min:
+    name: Saturation min
+    description: Default 80.
+  val_min:
+    name: Brightness min
+    description: Default 40. Lower if the ball edges are dark.
+  topic_prefix:
+    name: MQTT topic prefix
+    description: Default water_tank. Change to run several tanks.
+  device_name:
+    name: Device name
+    description: Default "Water Tank".
+  mqtt_host:
+    name: MQTT host
+    description: Leave empty to use the Mosquitto add-on automatically.
+  mqtt_port:
+    name: MQTT port
+  mqtt_username:
+    name: MQTT username
+  mqtt_password:
+    name: MQTT password

@@ -1,0 +1,44 @@
+name: Water Level Analyzer
+version: "0.1.0"
+slug: water_level_analyzer
+description: Water level from an ESP32-CAM snapshot of a floating orange ping-pong ball
+url: https://github.com/ricksy/esp32cam-water-level
+arch:
+  - aarch64
+  - amd64
+init: false
+startup: application
+boot: auto
+services:
+  - mqtt:need
+map:
+  - share:rw
+options:
+  camera_url: http://water-tank.local/capture.jpg
+  interval_seconds: 60
+  median_window: 5
+  full_litres: 0
+  calibration: []
+  image_dir: /share/water_level
+  save_failed_images: true
+schema:
+  camera_url: url
+  interval_seconds: int(10,3600)
+  median_window: int(1,30)
+  full_litres: float(0,)
+  calibration:
+    - litres: float
+      diameter_px: float
+  image_dir: str
+  save_failed_images: bool
+  roi: match(^\d+,\s*\d+,\s*\d+,\s*\d+$)?
+  hue_min: int(0,179)?
+  hue_max: int(0,179)?
+  sat_min: int(0,255)?
+  val_min: int(0,255)?
+  topic_prefix: str?
+  device_name: str?
+  mqtt_host: str?
+  mqtt_port: port?
+  mqtt_username: str?
+  mqtt_password: password?

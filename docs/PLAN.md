@@ -30,11 +30,14 @@ starts.
 - [ ] Rolling median, rejection rules (area, circularity, border touch)
 
 ## Phase 4: Mechanical install
+- [ ] Lid layout: guide tube/camera opposite the dryer inlet, grommet for drip tubes + pump cable
+- [ ] Route the dryer inlet so it doesn't splash into the guide tube
 - [ ] Cut and perforate the guide tube, blacken the inside, fix it under the lens
 - [ ] Mount the ESP32-CAM on the lid behind a clear window, route USB power
 - [ ] Set focus at ~25 cm, check framing (tube centred in ROI)
 
 ## Phase 5: Calibration and accuracy
+- [ ] Define "empty" = Gardena pump intake level (what the pump can no longer draw)
 - [ ] Empty → full in 5 L steps with a measuring jug, record diameters
 - [ ] Fit, check residuals (taper?), choose the model
 - [ ] Verify with 3 independent random fills: target error ≤ ±0.5 L
@@ -48,7 +51,9 @@ starts.
 - [ ] Install via "Add-on store → Repositories → this GitHub URL"
 
 ## Phase 7: Hardening and automations
-- [ ] Alert automations: low water (< 20 %), detection failing > 10 min, device offline
+- [ ] Alert automations: overflow (≥ 90 % / ≥ 97 %), low water (< 20 %), detection failing > 10 min, device offline
+- [ ] Gardena pump dry-run cut-off via smart plug (< 5 %)
+- [ ] Inflow/watering event detection (step changes) with litres per event
 - [ ] Lovelace example card (gauge + snapshot)
 - [ ] Long-term check after 2 weeks: fogging, algae, drift; re-tune
 - [ ] v1.0.0 release tag
@@ -56,4 +61,7 @@ starts.
 ## Open questions
 - Exact usable height: where must "full" be, given the lid and the 10 cm headroom?
 - Is a guide tube acceptable inside the drum (it costs ~1–2 L of capacity)?
-- How does the water get in and out (tap at the bottom, or scooped from the top)? A scoop could knock the tube.
+- Gardena pump model? (e.g. holiday irrigation set 1265; its intake height sets "empty")
+- Is the pump plugged in through a smart plug HA can switch (needed for the dry-run cut-off)?
+- Is the dryer controllable/visible in HA (smart plug with power metering, so a dryer run can be detected)?
+- Where does the dryer hose end: through the lid, or a hole in the neck?

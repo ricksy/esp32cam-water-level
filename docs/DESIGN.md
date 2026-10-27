@@ -175,3 +175,19 @@ PlatformIO + Arduino framework (`esp32-camera` driver).
 | Colour drift (AWB) | Lock AWB/exposure in firmware; thresholds configurable |
 | Food-safe water contact | Ball and tube are the only parts in water; use food-grade PP/PVC pipe and a new ball |
 | Lens focus | OV2640 lens can be turned to adjust focus; set it for ~25 cm (mid-range) |
+| Dryer inflow makes ripples, so the ball bobs | Guide tube damps them; rolling median; optional "unstable" flag when the spread of the window is large |
+| Warm humid condensate makes fogging worse | Window + anti-fog as above; fogging shows up as low contrast and a detection failure, which triggers an alert |
+| Lint / scum on the surface or the ball | Filter/sock on the dryer hose outlet; matte ball is easy to wipe; monitor detection confidence |
+| Tank overflows while the dryer runs | **High-level alert** in HA (e.g. ≥ 90 %), so you can empty the tank before the next dryer run |
+| Pump runs dry | **Low-level alert / cut-off**: HA switches off the pump's smart plug below the pump-intake level |
+
+## Using the level beyond display
+
+* **Overflow protection:** notify at ≥ 90 %, urgent at ≥ 97 %. Optionally block
+  the dryer through a smart plug, but only when it is idle; never cut a running dryer.
+* **Dry-run protection for the Gardena pump:** "empty" is calibrated as the
+  pump-intake level, not the tank floor. Below 5 % HA turns off the pump's smart
+  plug. The pump's own timer still schedules watering; HA only vetoes it.
+* **Events:** a step increase means the dryer emptied in, a step decrease
+  means a watering run. They can be logged as HA events or counters (litres
+  delivered to the plants per run).

@@ -33,6 +33,34 @@ plasteo 40 L wide-neck drum (Weithalsfass), blue, opaque, with a screw lid.
 * Opaque blue walls: the inside is dark, so every photo uses the flash. The blue
   background also helps the orange segmentation.
 
+## What else is in the tank
+
+| Item | Where | Effect on the measurement |
+|---|---|---|
+| **Inlet hose, 25 mm** (yellow/blue striped), condensate from the tumble dryer | Through the neck/lid, outlet near the top | Falling water causes ripples and splashes, so the ball bobs during a dryer run. Condensate is warm and humid, which makes lens fogging more likely. Lint can float on the surface |
+| **Gardena irrigation pump** (submersible) | On the tank floor | Takes up floor space, so the guide tube must stand beside it. The pump stops drawing water below its intake, so that level is the practical "empty". Watering runs cause sudden level drops |
+| **2 × ~5 mm drip tubes + pump power cable** | From the pump up through the neck | More things competing for room in the 22 cm opening |
+
+### Lid layout (Ø 22 cm opening)
+
+```
+            ┌───── lid, Ø 22 cm ─────┐
+           /                          \
+          │   (●)            ◯         │   ◯  25 mm dryer inlet, kept away from the tube
+          │  guide tube     inlet      │      so it doesn't splash into it
+          │  + camera                  │   (●) camera window over the Ø50 guide tube
+          │            ·  ·  ▪         │   · · ▪  2 drip tubes + pump cable (grommet)
+           \                          /
+            └──────────────────────────┘
+```
+
+* Inlet and guide tube on opposite sides. If possible, extend the inlet below
+  the water line (or angle it at the wall) so it doesn't splash.
+* The guide tube stands on the floor next to the pump. It must not rest on the
+  pump or its cable.
+* The tube's perforations help here too: they damp the ripples from inflow
+  and pumping, so the ball inside stays calm.
+
 ## Mounting
 
 ```

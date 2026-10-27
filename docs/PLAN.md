@@ -17,9 +17,8 @@ starts.
 - [x] Red power LED on the MB board leaks a faint glow; tape over it in the final install
 - [x] Bench at ~15 cm: 326 px at UXGA → f ≈ 1220 px (~66° HFOV), to be confirmed
 - [ ] Bench series at precisely measured 10 / 20 / 30 / 43 cm: `tools/bench_capture.py <cm>`
-- [ ] Take test shots of the ball at known distances (10, 20, 30, 43 cm) on the bench
-- [ ] Measure the real FOV/focal length and update the resolution table in DESIGN.md
-- [ ] Find the LED duty that lights the tube without blowing out the image
+- [ ] Fit the real focal length from that series and update the resolution table in DESIGN.md
+- [ ] Recheck LED duty inside the tube (glare), once Phase 4 hardware exists
 - **Exit:** the ball is clearly segmentable at 10 cm and 43 cm, in the dark, with the LED.
 
 ## Phase 2: Firmware v1

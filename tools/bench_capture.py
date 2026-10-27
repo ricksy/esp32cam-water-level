@@ -35,7 +35,8 @@ out = pathlib.Path(__file__).resolve().parent.parent / "captures" / "bench"
 out.mkdir(parents=True, exist_ok=True)
 
 # The first frame after idle can still have a colour cast; throw it away.
-fetch(f"http://{args.host}/capture.jpg?res=VGA")
+# Use the same resolution: a size switch spoils the next frame too.
+fetch(f"http://{args.host}/capture.jpg?res={args.res}&led={args.led[0]}")
 
 for led in args.led:
     for n in range(args.count):

@@ -112,7 +112,8 @@ static void handleCapture() {
   int led = server.hasArg("led") ? server.arg("led").toInt() : DEFAULT_LED_DUTY;
   int settle = server.hasArg("settle") ? constrain(server.arg("settle").toInt(), 0, 5000) : DEFAULT_SETTLE_MS;
 
-  if (sensor->status.framesize != size) sensor->set_framesize(sensor, size);
+  bool resized = sensor->status.framesize != size;
+  if (resized) sensor->set_framesize(sensor, size);
   if (sensor->status.quality != quality) sensor->set_quality(sensor, quality);
 
   // Auto white balance drifts between shots, which moves the ball's hue.
@@ -130,7 +131,8 @@ static void handleCapture() {
   setLed(led);
   delay(settle);
   // Frames already in flight were exposed before the LED came on.
-  for (int i = 0; i < STALE_FRAMES; i++) {
+  // A resolution switch spoils a few more frames (exposure and colour jump).
+  for (int i = 0; i < STALE_FRAMES + (resized ? 3 : 0); i++) {
     camera_fb_t *stale = esp_camera_fb_get();
     if (stale) esp_camera_fb_return(stale);
   }

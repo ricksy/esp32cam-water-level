@@ -16,9 +16,9 @@ starts.
 - [x] Dark background (black T-shirt): 412.4 / 412.3 px, circularity 0.989, no spill, no ghost
 - [x] LED duty: no effect at ~15 cm, but at ~40 cm the edges go dark below ~60 % (30 %: 124 px, 100 %: 173–178 px). Default now 100 %, mask V > 40
 - [x] Red power LED on the MB board leaks a faint glow; tape over it in the final install
-- [x] Bench estimates: ~15 cm → 412 px, ~40 cm → 178 px; f ≈ 1550–1780 px (~48–54° HFOV), distances not yet measured
-- [ ] Bench series at precisely measured 10 / 20 / 30 / 43 cm: `tools/bench_capture.py <cm>`
-- [ ] Fit the real focal length from that series and update the resolution table in DESIGN.md
+- [x] Measured 34 cm → 180.0 px → f ≈ 1617 px (52.6° HFOV, 63.5° diagonal); resolution table updated
+- [x] One bad frame in the 34 cm series was the room light switched on briefly. Room light swamps the LED, so the tank lid must stay closed. As a precaution, the firmware discards 3 extra frames after a resolution switch, and the bench script warms up at the target size
+- [ ] Optional: one more measured point near 12 cm to confirm the model at the full-tank end
 - [ ] Recheck LED duty inside the tube (glare), once Phase 4 hardware exists
 - **Exit:** the ball is clearly segmentable at 10 cm and 43 cm, in the dark, with the LED.
 

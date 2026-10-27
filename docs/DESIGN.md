@@ -79,26 +79,21 @@ edge. It's rejected for v1.
 
 ### Expected resolution
 
-Bench measurements (Phase 1, white balance *sunny*, black background, LED 100 %):
+Measured (Phase 1, black background, LED 100 %, white balance *sunny*): ball
+top **34 cm** from the lens (centre 36 cm) → **180.0 px** at UXGA, repeatable
+to 0.1 px. For a sphere, `d = 2·R·f / sqrt(Zc² − R²)`, which gives
+**f ≈ 1617 px**, i.e. **52.6° horizontal / 63.5° diagonal**. That matches the
+stock OV2640 lens (~66° diagonal). Interior footprint ≈ 1200 cm² → ≈ 1.2 L per cm.
 
-| Distance (user estimate) | Ball diameter (UXGA) | Implied f | Implied HFOV |
-|---|---|---|---|
-| "about 15 cm" | 412 px | ~1550 px | ~54° |
-| "maybe 40 cm" | 178 px | ~1780 px | ~48° |
-
-The two estimates disagree because the distances were eyeballed. The stock
-OV2640 lens is typically ~66° diagonal ≈ 50–54° horizontal, so **f ≈ 1700 px**
-is used below until measured distances confirm it. Calibration does not need f.
-Only this accuracy estimate does. Interior footprint ≈ 1200 cm² → ≈ 1.2 L per cm.
-
-| Lens → ball (Z) | Ball diameter | 1 px change ≈ | Volume per px |
-|-----------------|---------------|---------------|---------------|
-| 43 cm (empty)   | ~158 px       | 0.27 cm       | ~0.33 L       |
-| 25 cm (half)    | ~272 px       | 0.09 cm       | ~0.11 L       |
-| 12 cm (full)    | ~567 px       | 0.02 cm       | ~0.03 L       |
+| Lens → ball top (Z) | Ball diameter | 1 px change ≈ | Volume per px |
+|---------------------|---------------|---------------|---------------|
+| 43 cm (empty)       | ~144 px       | 0.31 cm       | ~0.38 L       |
+| 34 cm (measured)    | 180 px        | 0.20 cm       | ~0.24 L       |
+| 25 cm (half)        | ~240 px       | 0.11 cm       | ~0.13 L       |
+| 12 cm (full)        | ~467 px       | 0.03 cm       | ~0.04 L       |
 
 Repeatability on the bench is 0.1–1.2 px between shots, so a single shot is
-already within ±0.5 L even when empty, and the rolling median adds margin.
+within ±0.5 L even when empty, and the rolling median adds margin.
 
 **Colour must be stable.** With auto white balance, the measured diameter
 wandered by 13 px between shots, because the HSV mask edge moves with the

@@ -79,19 +79,28 @@ edge. It's rejected for v1.
 
 ### Expected resolution
 
-Assumptions: UXGA (1600 × 1200), ~54° horizontal FOV → f ≈ 1570 px, interior
-footprint ≈ 1400 cm² (≈ 1.4 L per cm). These numbers must be verified in
-Phase 1.
+Measured on the bench (Phase 1, white balance preset *sunny*): the ball at
+**~15 cm** is **326 px** wide at UXGA. That gives f ≈ 1220 px, or about 66°
+horizontal FOV. This is wider than first assumed and needs confirming with a
+precisely measured distance. The repeat spread over 4 shots is **1.2 px**.
+Assumed interior footprint ≈ 1200 cm² (35 × 35 minus walls and corners), so
+≈ 1.2 L per cm.
 
 | Lens → ball (Z) | Ball diameter | 1 px change ≈ | Volume per px |
 |-----------------|---------------|---------------|---------------|
-| 43 cm (empty)   | ~146 px       | 0.29 cm       | ~0.4 L        |
-| 25 cm (half)    | ~251 px       | 0.10 cm       | ~0.14 L       |
-| 10 cm (full)    | ~628 px       | 0.016 cm      | ~0.02 L       |
+| 43 cm (empty)   | ~114 px       | 0.38 cm       | ~0.45 L       |
+| 25 cm (half)    | ~195 px       | 0.13 cm       | ~0.15 L       |
+| 15 cm           | ~326 px       | 0.05 cm       | ~0.05 L       |
 
-Sub-pixel diameter (from contour area) plus a median over several readings
+Sub-pixel diameter (convex hull area) plus a median over several readings
 gives better than ±0.5 L across the range. Accuracy is worst when the tank is
 nearly empty.
+
+**Colour must be stable.** With auto white balance, the measured diameter
+wandered by 13 px between shots, because the HSV mask edge moves with the
+colour cast. The fixed *sunny* preset (`wb=1`, firmware default) cut that to
+1.2 px. Each preset gives a slightly different diameter, so never change it
+after calibration.
 
 ### Usable range / headroom
 
@@ -109,7 +118,7 @@ lid, so the usable capacity is less than the nominal 40 L. The analyzer reports
    specular highlight on the ball, which would otherwise punch a hole in the mask.
 5. Take the largest contour. Reject it if area < min, if circularity
    `4πA/P²` < 0.75, or if it touches the image border.
-6. Diameter = `2·sqrt(area/π)` (sub-pixel), cross-checked against `minEnclosingCircle`.
+6. Diameter = `2·sqrt(hull_area/π)` from the **convex hull** (sub-pixel). The printed logo on the ball breaks the mask; the hull bridges it.
 7. Push to a rolling window (default 5), take the median, and convert with the
    calibration to litres, cm and %.
 8. Publish. Every N minutes (and on failure), save the raw and annotated JPEGs to

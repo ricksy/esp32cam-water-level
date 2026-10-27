@@ -5,6 +5,8 @@
 //   q:      JPEG quality 4..63, lower is better     (default 10)
 //   led:    flash LED duty 0..100 %                 (default 30)
 //   settle: ms between LED on and capture           (default 500)
+//   wb:     0 auto, 1 sunny, 2 cloudy, 3 office, 4 home (default 1)
+//   aec:    -1 auto exposure, or fixed 0..1200      (default -1)
 // GET /health  -> JSON status
 
 #include <Arduino.h>
@@ -28,6 +30,7 @@ static const int DEFAULT_SETTLE_MS = 500;
 static const int DEFAULT_QUALITY = 10;
 static const framesize_t DEFAULT_FRAMESIZE = FRAMESIZE_UXGA;
 static const int STALE_FRAMES = 2;
+static const int DEFAULT_WB_MODE = 1;  // sunny: closest preset to the white LED
 
 WebServer server(80);
 
@@ -112,6 +115,17 @@ static void handleCapture() {
   if (sensor->status.framesize != size) sensor->set_framesize(sensor, size);
   if (sensor->status.quality != quality) sensor->set_quality(sensor, quality);
 
+  // Auto white balance drifts between shots, which moves the ball's hue.
+  // wb=0 auto, 1 sunny, 2 cloudy, 3 office, 4 home (presets disable drift).
+  int wb = server.hasArg("wb") ? constrain(server.arg("wb").toInt(), 0, 4) : DEFAULT_WB_MODE;
+  sensor->set_whitebal(sensor, 1);
+  sensor->set_awb_gain(sensor, 1);
+  sensor->set_wb_mode(sensor, wb);
+  // aec=-1 auto exposure, otherwise a fixed exposure 0..1200.
+  int aec = server.hasArg("aec") ? constrain(server.arg("aec").toInt(), -1, 1200) : -1;
+  sensor->set_exposure_ctrl(sensor, aec < 0);
+  if (aec >= 0) sensor->set_aec_value(sensor, aec);
+
   uint32_t start = millis();
   setLed(led);
   delay(settle);
@@ -138,7 +152,24 @@ static void handleCapture() {
   server.sendHeader("X-Capture-Ms", String(lastCaptureMs));
   server.setContentLength(fb->len);
   server.send(200, "image/jpeg", "");
-  server.sendContent(reinterpret_cast<const char *>(fb->buf), fb->len);
+
+  // WebServer::sendContent gives up silently on a slow link, truncating the
+  // JPEG; push it in chunks and keep retrying until a 10 s deadline instead.
+  WiFiClient client = server.client();
+  size_t sent = 0;
+  uint32_t deadline = millis() + 10000;
+  while (sent < fb->len && client.connected() && millis() < deadline) {
+    size_t n = client.write(fb->buf + sent, min<size_t>(4096, fb->len - sent));
+    if (n == 0) {
+      delay(10);
+      continue;
+    }
+    sent += n;
+  }
+  if (sent < fb->len) {
+    captureFailures++;
+    Serial.printf("Capture send truncated: %u/%u bytes\n", sent, fb->len);
+  }
   esp_camera_fb_return(fb);
 }
 

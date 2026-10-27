@@ -11,8 +11,12 @@ starts.
 ## Phase 1: Camera bring-up and feasibility
 - [x] PlatformIO project in `firmware/`, minimal sketch: Wi-Fi + `/capture.jpg` + flash LED, `/health`, OTA, mDNS `water-tank.local`
 - [x] Confirm PSRAM (4 MB) and UXGA capture (~105 KB, ~0.8 s incl. 500 ms LED settle)
-- [ ] First frame after boot has a green cast (AWB not converged): warm up / lock AWB in Phase 2
-- [ ] Bench series with `tools/bench_capture.py <distance_cm> --led 10 30 60`
+- [x] Full-size transfers got cut off on weak Wi-Fi: firmware now writes in chunks until a deadline
+- [x] Colour stability: auto WB → 13 px spread; fixed preset `wb=1` (sunny) → 1.2 px. Default set to sunny
+- [x] LED duty has no measurable effect on diameter (10/30/60 %); auto exposure compensates
+- [x] Red power LED on the MB board leaks a faint glow; tape over it in the final install
+- [x] Bench at ~15 cm: 326 px at UXGA → f ≈ 1220 px (~66° HFOV), to be confirmed
+- [ ] Bench series at precisely measured 10 / 20 / 30 / 43 cm: `tools/bench_capture.py <cm>`
 - [ ] Take test shots of the ball at known distances (10, 20, 30, 43 cm) on the bench
 - [ ] Measure the real FOV/focal length and update the resolution table in DESIGN.md
 - [ ] Find the LED duty that lights the tube without blowing out the image

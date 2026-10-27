@@ -13,6 +13,7 @@ starts.
 - [x] Confirm PSRAM (4 MB) and UXGA capture (~105 KB, ~0.8 s incl. 500 ms LED settle)
 - [x] Full-size transfers got cut off on weak Wi-Fi: firmware now writes in chunks until a deadline
 - [x] Colour stability: auto WB → 13 px spread; fixed preset `wb=1` (sunny) → 1.2 px. Default set to sunny
+- [x] Dark background (black T-shirt): 412.4 / 412.3 px, circularity 0.989, no spill, no ghost
 - [x] LED duty has no measurable effect on diameter (10/30/60 %); auto exposure compensates
 - [x] Red power LED on the MB board leaks a faint glow; tape over it in the final install
 - [x] Bench at ~15 cm: 326 px at UXGA → f ≈ 1220 px (~66° HFOV), to be confirmed
@@ -27,6 +28,7 @@ starts.
 - [ ] Fixed AWB/AE after warm-up, discard stale frame before capture
 - [ ] ArduinoOTA, watchdog, Wi-Fi reconnect with backoff
 - [ ] 24 h soak test: 1 capture/min with no hang or brownout
+- [ ] Wi-Fi is marginal on the desk (RSSI −67…−72, ~5 s per 100 KB UXGA, software resets after Wi-Fi loss): check RSSI at the tank, consider a crop window (only the tube matters) or lower resolution / JPEG quality
 
 ## Phase 3: Analyzer core (offline)
 - [ ] `analyzer/` Python package: `detect.py` (HSV → mask → contour → diameter), `calibrate.py` (fit `V = b − a/d` and piecewise fallback)

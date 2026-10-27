@@ -188,8 +188,8 @@ PlatformIO + Arduino framework (`esp32-camera` driver).
 
 | Risk | Mitigation |
 |---|---|
-| Condensation fogs the lens in a closed humid drum | Mount behind a small clear window (acrylic) a few mm above the lid, anti-fog coating, keep LED duty low; detection-fail sensor alerts |
-| Flash glare on the water/ball, or reflected by the window into the lens | Divider between LED and lens at the window, matte black tube interior, low LED duty, hole filling in the mask |
+| Condensation fogs the lens in a closed humid drum | Mount behind a small clear window (acrylic) a few mm above the lid, anti-fog coating, short LED pulses; detection-fail sensor alerts |
+| Flash glare on the water/ball, or reflected by the window into the lens | Divider between LED and lens at the window, matte black tube interior, LED duty retuned in the tube (glare vs. dark ball edges), hole filling in the mask |
 | ESP32-CAM brownouts (known issue) | Good 5 V/2 A supply, 470 µF cap at the 5 V pin, brownout reset logged in `/health` |
 | Ball sticks to the tube wall | Smooth PVC, ID ≥ 46 mm, perforations large enough for water to equalise quickly |
 | Colour drift (AWB) | Lock AWB/exposure in firmware; thresholds configurable |

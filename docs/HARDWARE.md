@@ -19,7 +19,7 @@ AI-Thinker ESP32-CAM (ESP32-D0WD-V3, 4 MB flash) with an OV2640 sensor
 (`TY-OV2640-V2.0` flex, stock lens) on an ESP32-CAM-MB programmer (CH340,
 micro-USB, IO0 + RST buttons).
 
-![ESP32-CAM on ESP32-CAM-MB](images/esp32-cam-board.jpg)
+Product photo: [ESP32-CAM with ESP32-CAM-MB on Amazon](https://m.media-amazon.com/images/I/61OuVGaWFcL._AC_SL1468_.jpg).
 
 * The **white flash LED** (bottom right in the photo, GPIO4) is ~2.5 cm away from
   the lens. Under a shared window, the flash reflects off the acrylic straight
@@ -34,7 +34,7 @@ micro-USB, IO0 + RST buttons).
 
 plasteo 40 L wide-neck drum (Weithalsfass), blue, opaque, with a screw lid.
 
-![plasteo 40 L drum](images/plasteo-40l-drum.jpg)
+Product photo with dimensions: [plasteo 40 L Weithalsfass on Amazon](https://m.media-amazon.com/images/I/71qMPv7U7KL._AC_SL1500_.jpg).
 
 * Footprint **35 × 35 cm** with chamfered corners; total height **45 cm**
   *including* the neck and lid. (The "45 × 35 × 45" in the listing is wrong;

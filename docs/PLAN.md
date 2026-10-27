@@ -9,8 +9,10 @@ starts.
 - [x] Board identified: AI-Thinker ESP32-CAM, ESP32-D0WD-V3, 4 MB flash, CH340 on `/dev/ttyUSB0`
 
 ## Phase 1: Camera bring-up and feasibility
-- [ ] PlatformIO project in `firmware/`, minimal sketch: Wi-Fi + `/capture.jpg` + flash LED
-- [ ] Confirm PSRAM and that UXGA capture works reliably
+- [x] PlatformIO project in `firmware/`, minimal sketch: Wi-Fi + `/capture.jpg` + flash LED, `/health`, OTA, mDNS `water-tank.local`
+- [x] Confirm PSRAM (4 MB) and UXGA capture (~105 KB, ~0.8 s incl. 500 ms LED settle)
+- [ ] First frame after boot has a green cast (AWB not converged): warm up / lock AWB in Phase 2
+- [ ] Bench series with `tools/bench_capture.py <distance_cm> --led 10 30 60`
 - [ ] Take test shots of the ball at known distances (10, 20, 30, 43 cm) on the bench
 - [ ] Measure the real FOV/focal length and update the resolution table in DESIGN.md
 - [ ] Find the LED duty that lights the tube without blowing out the image

@@ -79,22 +79,26 @@ edge. It's rejected for v1.
 
 ### Expected resolution
 
-Measured on the bench (Phase 1, white balance preset *sunny*): the ball at
-**~15 cm** is **326 px** wide at UXGA. That gives f ≈ 1220 px, or about 66°
-horizontal FOV. This is wider than first assumed and needs confirming with a
-precisely measured distance. The repeat spread over 4 shots is **1.2 px**.
-Assumed interior footprint ≈ 1200 cm² (35 × 35 minus walls and corners), so
-≈ 1.2 L per cm.
+Bench measurements (Phase 1, white balance *sunny*, black background, LED 100 %):
+
+| Distance (user estimate) | Ball diameter (UXGA) | Implied f | Implied HFOV |
+|---|---|---|---|
+| "about 15 cm" | 412 px | ~1550 px | ~54° |
+| "maybe 40 cm" | 178 px | ~1780 px | ~48° |
+
+The two estimates disagree because the distances were eyeballed. The stock
+OV2640 lens is typically ~66° diagonal ≈ 50–54° horizontal, so **f ≈ 1700 px**
+is used below until measured distances confirm it. Calibration does not need f.
+Only this accuracy estimate does. Interior footprint ≈ 1200 cm² → ≈ 1.2 L per cm.
 
 | Lens → ball (Z) | Ball diameter | 1 px change ≈ | Volume per px |
 |-----------------|---------------|---------------|---------------|
-| 43 cm (empty)   | ~114 px       | 0.38 cm       | ~0.45 L       |
-| 25 cm (half)    | ~195 px       | 0.13 cm       | ~0.15 L       |
-| 15 cm           | ~326 px       | 0.05 cm       | ~0.05 L       |
+| 43 cm (empty)   | ~158 px       | 0.27 cm       | ~0.33 L       |
+| 25 cm (half)    | ~272 px       | 0.09 cm       | ~0.11 L       |
+| 12 cm (full)    | ~567 px       | 0.02 cm       | ~0.03 L       |
 
-Sub-pixel diameter (convex hull area) plus a median over several readings
-gives better than ±0.5 L across the range. Accuracy is worst when the tank is
-nearly empty.
+Repeatability on the bench is 0.1–1.2 px between shots, so a single shot is
+already within ±0.5 L even when empty, and the rolling median adds margin.
 
 **Colour must be stable.** With auto white balance, the measured diameter
 wandered by 13 px between shots, because the HSV mask edge moves with the
@@ -113,7 +117,8 @@ lid, so the usable capacity is less than the nominal 40 L. The analyzer reports
 
 1. `GET http://<esp32>/capture.jpg` (timeout 10 s, 2 retries).
 2. Decode → crop to a configurable ROI (the tube opening).
-3. Convert to HSV and threshold orange (default H 5–25, S > 120, V > 80, configurable).
+3. Convert to HSV and threshold orange (default H 3–28, S > 80, **V > 40**, configurable). At 40 cm the ball's
+   edges are dark; with V > 80 and the LED at 30 % only the bright centre survived (124 px instead of ~176 px).
 4. Morphological open, then close, then **fill holes**. The flash makes a white
    specular highlight on the ball, which would otherwise punch a hole in the mask.
 5. Take the largest contour. Reject it if area < min, if circularity
@@ -155,8 +160,8 @@ PlatformIO + Arduino framework (`esp32-camera` driver).
 | `POST /config` | optional: resolution, JPEG quality, LED duty, settle ms (persisted to NVS) |
 | OTA (ArduinoOTA) | updates without opening the lid |
 
-* **Flash LED**: GPIO4, LEDC PWM. Start at ~30 % duty and tune. It's on for
-  only ~200 ms per minute, so heat and current stay low.
+* **Flash LED**: GPIO4, LEDC PWM, **100 % by default**. At 40 cm the ball's edges
+  fade below ~60 %. It's on for under 1 s per minute, so heat stays low.
 * Camera settings are fixed after warm-up (AWB/AE locked, or set manually), so
   colour thresholds stay stable.
 * A watchdog reboots the board if the camera init or Wi-Fi fails, and it

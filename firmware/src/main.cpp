@@ -3,7 +3,7 @@
 // GET /capture.jpg[?res=UXGA&q=10&led=30&settle=500]
 //   res:    QVGA | VGA | SVGA | XGA | SXGA | UXGA   (default UXGA)
 //   q:      JPEG quality 4..63, lower is better     (default 10)
-//   led:    flash LED duty 0..100 %                 (default 30)
+//   led:    flash LED duty 0..100 %                 (default 100)
 //   settle: ms between LED on and capture           (default 500)
 //   wb:     0 auto, 1 sunny, 2 cloudy, 3 office, 4 home (default 1)
 //   aec:    -1 auto exposure, or fixed 0..1200      (default -1)
@@ -25,7 +25,7 @@ static const int LED_CHANNEL = 2;  // channel 0 / timer 0 drive the camera XCLK
 static const int LED_FREQ_HZ = 5000;
 static const int LED_RES_BITS = 8;
 
-static const int DEFAULT_LED_DUTY = 30;
+static const int DEFAULT_LED_DUTY = 100;  // ball edges go dark at 40 cm below ~60 %
 static const int DEFAULT_SETTLE_MS = 500;
 static const int DEFAULT_QUALITY = 10;
 static const framesize_t DEFAULT_FRAMESIZE = FRAMESIZE_UXGA;

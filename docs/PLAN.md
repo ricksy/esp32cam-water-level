@@ -14,9 +14,9 @@ starts.
 - [x] Full-size transfers got cut off on weak Wi-Fi: firmware now writes in chunks until a deadline
 - [x] Colour stability: auto WB → 13 px spread; fixed preset `wb=1` (sunny) → 1.2 px. Default set to sunny
 - [x] Dark background (black T-shirt): 412.4 / 412.3 px, circularity 0.989, no spill, no ghost
-- [x] LED duty has no measurable effect on diameter (10/30/60 %); auto exposure compensates
+- [x] LED duty: no effect at ~15 cm, but at ~40 cm the edges go dark below ~60 % (30 %: 124 px, 100 %: 173–178 px). Default now 100 %, mask V > 40
 - [x] Red power LED on the MB board leaks a faint glow; tape over it in the final install
-- [x] Bench at ~15 cm: 326 px at UXGA → f ≈ 1220 px (~66° HFOV), to be confirmed
+- [x] Bench estimates: ~15 cm → 412 px, ~40 cm → 178 px; f ≈ 1550–1780 px (~48–54° HFOV), distances not yet measured
 - [ ] Bench series at precisely measured 10 / 20 / 30 / 43 cm: `tools/bench_capture.py <cm>`
 - [ ] Fit the real focal length from that series and update the resolution table in DESIGN.md
 - [ ] Recheck LED duty inside the tube (glare), once Phase 4 hardware exists

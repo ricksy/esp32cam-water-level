@@ -22,13 +22,18 @@ starts.
 - [ ] Recheck LED duty inside the tube (glare), once Phase 4 hardware exists
 - **Exit:** the ball is clearly segmentable at 10 cm and 43 cm, in the dark, with the LED.
 
-## Phase 2: Firmware v1
-- [ ] `secrets.h` template, mDNS `water-tank.local`
-- [ ] `/health` JSON, `/config` persisted to NVS
-- [ ] Fixed AWB/AE after warm-up, discard stale frame before capture
-- [ ] ArduinoOTA, watchdog, Wi-Fi reconnect with backoff
-- [ ] 24 h soak test: 1 capture/min with no hang or brownout
-- [ ] Wi-Fi is marginal on the desk (RSSI −67…−72, ~5 s per 100 KB UXGA, software resets after Wi-Fi loss): check RSSI at the tank, consider a crop window (only the tube matters) or lower resolution / JPEG quality
+## Phase 2: Firmware v1 (soak test running)
+- [x] `secrets.h` template, mDNS `water-tank.local`
+- [x] `/health` JSON (version, named reset reason, Wi-Fi reconnects, settings), `/config` persisted to NVS (survives reboot, `reset=1`)
+- [x] Fixed white balance (*sunny*), stale frames discarded (+3 after a resolution switch)
+- [x] JPEG quality 15 by default: 60 KB instead of 89 KB, diameter +0.2 px
+- [x] Send loop: 20 s deadline, 5 s stall cutoff
+- [x] Non-blocking Wi-Fi reconnect with backoff, reboot only after 10 min offline
+- [x] Task watchdog 60 s, paused during OTA
+- [x] OTA verified (`pio run -e ota`, password via `WATER_TANK_OTA_PASSWORD`), 76 s
+- [ ] Wi-Fi reconnect path not exercised yet (needs a router restart or moving out of range)
+- [ ] 24 h soak test: `tools/soak.py` → `captures/soak.csv` (started 2026-10-28 00:48)
+- [ ] Check RSSI at the tank; if marginal, consider an ESP32-CAM with an external antenna connector (IPEX) or sensor windowing to the tube area
 
 ## Phase 3: Analyzer core (offline) ✅
 - [x] `analyzer/` Python package: `detect.py` (HSV → mask → convex hull diameter + RANSAC circle cross-check), `calibrate.py` (fit `V = b − a/d`, auto piecewise fallback)

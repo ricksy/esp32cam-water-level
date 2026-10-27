@@ -156,17 +156,30 @@ PlatformIO + Arduino framework (`esp32-camera` driver).
 
 | Endpoint | Purpose |
 |---|---|
-| `GET /capture.jpg` | LED on (PWM) → wait for AE → discard 1 stale frame → capture → LED off → return JPEG |
-| `GET /health` | JSON: uptime, RSSI, free heap, PSRAM, last capture ms, reset reason |
-| `POST /config` | optional: resolution, JPEG quality, LED duty, settle ms (persisted to NVS) |
-| OTA (ArduinoOTA) | updates without opening the lid |
+| `GET /capture.jpg` | LED on → settle → discard stale frames → capture → LED off → JPEG. Query params override the stored settings for one shot |
+| `GET /config` / `POST /config?key=val` | Capture settings (`res`, `q`, `led`, `settle`, `wb`, `aec`) persisted in NVS; `POST /config?reset=1` restores defaults |
+| `GET /health` | JSON: version, uptime, RSSI, Wi-Fi reconnects, heap/PSRAM, reset reason (named, e.g. `brownout`), capture counts, settings |
+| OTA (ArduinoOTA) | `WATER_TANK_OTA_PASSWORD=… pio run -e ota -t upload`; ~75 s over the current Wi-Fi |
 
+Defaults: UXGA, **JPEG quality 15** (60 KB instead of 89 KB at q = 10; diameter
++0.2 px, same noise), LED 100 %, settle 500 ms, white balance *sunny*, auto
+exposure. `res`, `q` and `wb` each shift the measured diameter slightly, so
+they are frozen once calibrated.
+
+Robustness:
+
+* **Transfer:** the JPEG is written in 4 KB chunks with a 20 s overall
+  deadline and a 5 s no-progress cutoff. The Arduino lwIP send window
+  (~5.7 KB) makes throughput round-trip-bound on a laggy link, which is why
+  fewer bytes matter more than signal strength alone.
+* **Wi-Fi:** non-blocking reconnect with backoff 5 → 60 s. OTA and the HTTP
+  server keep running, and the board reboots only after 10 min without Wi-Fi.
+* **Watchdog:** task watchdog, 60 s (longer than settle + send deadline),
+  paused during OTA.
 * **Flash LED**: GPIO4, LEDC PWM, **100 % by default**. At 40 cm the ball's edges
   fade below ~60 %. It's on for under 1 s per minute, so heat stays low.
 * Camera settings are fixed after warm-up (AWB/AE locked, or set manually), so
   colour thresholds stay stable.
-* A watchdog reboots the board if the camera init or Wi-Fi fails, and it
-  reconnects to Wi-Fi with backoff.
 * Wi-Fi credentials live in `firmware/include/secrets.h` (git-ignored, template committed).
 * Static DHCP lease or mDNS (`water-tank.local`) so the analyzer can find it.
 
